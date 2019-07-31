@@ -26,7 +26,7 @@ var profileConfigs = {
     "network-genk": {
         profileDivId: "network-genk-instruction",
         summaryDivId: "network-genk-summary",
-        backendName: "genk",
+        backendName: "bicycle.genk",
         layers: {
             "cyclenetworks": {
                 "default": {
@@ -53,7 +53,7 @@ var profileConfigs = {
     "network": {
         profileDivId: "network-instruction",
         summaryDivId: "network-summary",
-        backendName:  "networks",
+        backendName:  "bicycle.networks",
         layers: {
             "cyclenetworks": false,
             "cyclenetwork-tiles": {
@@ -87,7 +87,7 @@ var profileConfigs = {
     "fastest": {
         profileDivId: "fastest-instruction",
         summaryDivId: "fastest-summary",
-        backendName: "shortest",
+        backendName: "bicycle.shortest",
         layers: {
             "cyclenetworks": false,
             "cyclenetwork-tiles": false,
@@ -186,15 +186,15 @@ function calculateAllRoutes(origin, destination, profiles = availableProfiles, l
  */
 function calculateRoute(origin, destination, profile = "genk", lang = 'en') {
     // Swap around values for the API
-    const originS = swapArrayValues(origin);
-    const destinationS = swapArrayValues(destination);
+    const originS = origin; // swapArrayValues(origin);
+    const destinationS = destination; //swapArrayValues(destination);
 
     // get the routing profile.
     var profileConfig = profileConfigs[profile];
     var instructions = profileConfig.instructions;
     let profile_url =profileConfig.backendName;
     const prof = (profile_url === "" ? "" : `&profile=${profile_url}`);
-    const url = `${urls.route}/route?instructions=${instructions}&lang=${lang}${prof}&loc1=${originS}&loc2=${destinationS}`;
+    const url = `${urls.route}/route?turn_by_turn=${instructions}&lang=${lang}${prof}&loc=${originS}&loc=${destinationS}`;
     routes[profile] = [];
 
     if (state.routeRequests[profile]) {
@@ -224,7 +224,7 @@ function calculateRoute(origin, destination, profile = "genk", lang = 'en') {
         let routeStops = [];
         let heightInfo = [];
 
-        route = json.route.features;
+        route = json.features;
         for (let i in route) {
             if (route[i].name === "Stop") {
                 routeStops.push(route[i]);
@@ -268,7 +268,7 @@ function calculateRoute(origin, destination, profile = "genk", lang = 'en') {
             // Add a new layer
             map.addSource(profile + "-source", {   
                 type: 'geojson',
-                data: json.route
+                data: json
             });
             //console.log(json.route)
             
