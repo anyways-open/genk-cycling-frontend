@@ -225,6 +225,35 @@ function calculateRoute(origin, destination, profile = "genk", lang = 'en') {
         let heightInfo = [];
 
         route = json.features;
+
+        var popularColors = {};
+        for (let i in route) {
+            if (route[i].properties === undefined ||
+                route[i].properties.cyclecolour === undefined) {
+                // nothing to see here.
+            } else if (route[i].properties.cyclecolour.length === 7) {
+                // exactly one color.
+                var c = popularColors[route[i].properties.cyclecolour];
+                if (c !== undefined) {
+                    c++;
+                } else {
+                    c = 0;
+                }
+                popularColors[route[i].properties.cyclecolour] = c;
+            } else {
+                var colors = route[i].properties.cyclecolour.split(',');
+                colors.forEach(function(color) {
+                    var c = popularColors[color];
+                    if (c !== undefined) {
+                        c++;
+                    } else {
+                        c = 0;
+                    }
+                    popularColors[color] = c;
+                });
+            }
+        }
+
         for (let i in route) {
             if (route[i].name === "Stop") {
                 routeStops.push(route[i]);
@@ -233,7 +262,18 @@ function calculateRoute(origin, destination, profile = "genk", lang = 'en') {
                 route[i].properties.cyclecolour = routeColor;
             } else if (route[i].properties.cyclecolour.length !== 7) {
                 if (route[i].properties.cyclecolour.length > 7) {
-                    route[i].properties.cyclecolour = route[i].properties.cyclecolour.substring(0, 7);
+                    var colors = route[i].properties.cyclecolour.split(',');
+                    // choose most popular color.
+                    var popularity = 0;
+                    var chosen = colors[0];
+                    colors.forEach(function(color) {
+                        var c = popularColors[color];
+                        if (c > popularity) {
+                            chosen = color;
+                            popularity = c;
+                        }
+                    });
+                    route[i].properties.cyclecolour = chosen;
                 } else {
                     route[i].properties.cyclecolour = routeColor;
                 }
