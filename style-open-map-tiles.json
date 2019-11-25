@@ -12,11 +12,11 @@
     "sources": {
         "openmaptiles": {
             "type": "vector",
-            "url": "https://maps.tilehosting.com/data/v3.json?key=RrAiXeTeoR4I64mRSxk8"
+            "url": "https://api.maptiler.com/data/v3.json?key=RrAiXeTeoR4I64mRSxk8"
         }
     },
-    "sprite": "https://maps.tilehosting.com/styles/basic/sprite",
-    "glyphs": "https://maps.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=RrAiXeTeoR4I64mRSxk8",
+    "sprite": "https://api.maptiler.com/styles/basic/sprite",
+    "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=RrAiXeTeoR4I64mRSxk8",
     "layers": [
         {
             "id": "background",

@@ -1,4 +1,4 @@
-const mapboxAccessCode = "pk.eyJ1IjoiZGFuaWVsbGV0ZXJyYXMiLCJhIjoiY2pqeWJheGxhMGwxODNxbW1sb2UzMGo0aiJ9.Y5HiKm7qjB1vrX7NGTOofA";
+const mapboxAccessCode = "pk.eyJ1IjoiYmVuLWFueXdheXMiLCJhIjoiY2p6d3RyMzVhMGVoYjNibGEwNGYzc21zciJ9.T9X-lvJFZrWiFyzYQUPIew";
 
 const routeWidthMain = 6;
 const routeWidthAlternative = 3;
